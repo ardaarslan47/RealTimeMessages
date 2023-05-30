@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Realtime Messaging App</title>
+    <link rel="stylesheet" href="css/app.css" />
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/app.js"></script>
+  </head>
+  <body>
+    <div class="chat-container">
+      <h1>Realtime Messaging App</h1>
+      <ul id="messages" class="message-list"></ul>
+      <div class="message-input">
+        <input type="text" id="messageInput" placeholder="Type a message..." />
+        <button onclick="sendMessage()">Send</button>
+      </div>
+    </div>
+  </body>
+</html>
