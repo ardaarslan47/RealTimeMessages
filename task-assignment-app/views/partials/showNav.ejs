@@ -1,0 +1,22 @@
+<nav>
+  <!-- dropdown -->
+  <div class="dropdown">
+    <span id="dropdownHeader"><%= task.title %></span>
+    <div class="dropdown-content">
+      <% tasks.filter(x => x.id !== task.id).forEach(e => { %>
+      <a href="<%= e._id %>"><%= e.title %></a>
+      <% }) %>
+    </div>
+  </div>
+
+  <!-- edit form -->
+  <%- include('editForm') %>
+
+  <!-- add task -->
+  <button>&#43;</button>
+  <form action="/tasks" method="post">
+    <input type="text" name="title" placeholder="Enter a Title" />
+    <button type="submit">Submit</button>
+  </form>
+</nav>
+<script src="/js/nav.js"></script>

@@ -1,0 +1,19 @@
+<nav>
+  <!-- dropdown -->
+  <div class="dropdown">
+    <span id="dropdownHeader">Select a Task</span>
+    <div class="dropdown-content">
+      <% for(let task of tasks){ %>
+      <a href="tasks/<%= task._id %>"><%= task.title %></a>
+      <% } %>
+    </div>
+  </div>
+
+  <!-- add task -->
+  <button>&#43;</button>
+  <form action="/tasks" method="post">
+    <input type="text" name="title" placeholder="Enter a Title" />
+    <button type="submit">Submit</button>
+  </form>
+</nav>
+<script src="/js/nav.js"></script>
