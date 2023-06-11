@@ -1,0 +1,34 @@
+<div>
+  <% for(let row of task.content){ %>
+  <div>
+    <p><%= row.title %></p>
+  </div>
+  <form
+    action="/tasks/<%= task._id %>/<%= row._id %>?_method=DELETE"
+    method="post"
+  >
+    <button type="submit">&#10005;</button>
+  </form>
+  <form
+    action="/tasks/<%= task._id %>/<%= row._id %>?_method=PUT"
+    method="post"
+  >
+    <button type="button">&#9998;</button>
+    <div class="edit-form">
+      <input type="text" name="newTitle" required />
+      <button type="submit">&#9998;</button>
+    </div>
+  </form>
+  <button>&#43;</button>
+  <form
+    action="/tasks/<%= task._id %>/<%= row._id %>?_method=PATCH"
+    method="post"
+  >
+    <input type="text" name="contentTitle" />
+    <input type="text" name="contentDescription" />
+    <button type="submit">SUBMIT</button>
+  </form>
+  <% for(let content of row.content){ %>
+  <p><%= content.description %>-<b><%= content.title %></b>-<%= content._id %></p>
+  <% } %> <% } %>
+</div>
