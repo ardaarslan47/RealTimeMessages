@@ -1,7 +1,15 @@
-<form action="/tasks/<%= task._id %>?_method=PUT" method="post">
-  <button type="button">&#9998;</button>
-  <div class="edit-form">
-    <input type="text" name="title" required />
-    <button type="submit">&#9998;</button>
+<button id="editTaskFormButton" style="vertical-align: middle">
+  <span>Edit Task</span>
+</button>
+<form
+  action="/tasks/<%= task._id %>?_method=PUT"
+  method="post"
+  id="editTaskForm"
+>
+  <div class="formContainer">
+    <h2>Edit Task</h2>
+    <label for="editTaskFormInput">Title: </label>
+    <input type="text" name="title" id="editTaskFormInput" value="<%= task.title %>" required />
+    <button type="submit">Submit</button>
   </div>
 </form>

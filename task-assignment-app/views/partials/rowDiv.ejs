@@ -7,28 +7,48 @@
     action="/tasks/<%= task._id %>/<%= row._id %>?_method=DELETE"
     method="post"
   >
-    <button type="submit">&#10005;</button>
+    <button type="submit" onclick="confirmSubmission(event)">&#10005;</button>
   </form>
+  <button type="button" id="editRowFormButton">Edit Row</button>
   <form
     action="/tasks/<%= task._id %>/<%= row._id %>?_method=PUT"
     method="post"
+    id="editRowForm"
   >
-    <button type="button">&#9998;</button>
     <div class="edit-form">
       <input type="text" name="newTitle" required />
-      <button type="submit">&#9998;</button>
+      <button type="submit">SUBMIT</button>
     </div>
   </form>
-  <button>&#43;</button>
+  <button id="createContentFormButton">Create Content</button>
   <form
     action="/tasks/<%= task._id %>/<%= row._id %>?_method=PATCH"
     method="post"
+    id="createContentForm"
   >
     <input type="text" name="contentTitle" />
     <input type="text" name="contentDescription" />
     <button type="submit">SUBMIT</button>
   </form>
   <% for(let content of row.content){ %>
-  <p><%= content.description %>-<b><%= content.title %></b>-<%= content._id %></p>
+  <p>
+    <%= content.description %>-<b><%= content.title %></b>-<%= content._id %>
+  </p>
+  <button id="editContentFormButton">Edit Content</button>
+  <form
+    action="/tasks/<%= task._id %>/<%= row._id %>/<%= content._id %>?_method=PUT"
+    method="post"
+    id="editContentForm"
+  >
+    <input type="text" name="newTitle" />
+    <input type="text" name="newDescription" />
+    <button type="submit">SUBMIT</button>
+  </form>
+  <form
+    action="/tasks/<%= task._id %>/<%= row._id %>/<%= content._id %>?_method=DELETE"
+    method="post"
+  >
+    <button type="submit" onclick="confirmSubmission(event)">&#10005;</button>
+  </form>
   <% } %> <% } %>
 </div>

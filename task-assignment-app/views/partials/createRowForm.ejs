@@ -1,4 +1,5 @@
-<form action="/tasks/<%= task._id %>?_method=PATCH" method="post">
+<button id="createRowFormButton">Create New Row</button>
+<form action="/tasks/<%= task._id %>?_method=PATCH" method="post" id="createRowForm">
   <input type="text" name="rowTitle" required />
   <button type="submit"> SUBMIT</button>
 </form>

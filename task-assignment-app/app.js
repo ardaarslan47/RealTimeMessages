@@ -88,12 +88,45 @@ app.delete("/tasks/:id/:rowId", async (req, res) => {
 app.patch("/tasks/:id/:rowId", async (req, res) => {
   const { id, rowId } = req.params;
   const { contentTitle, contentDescription } = req.body;
-  const newContent = new ContentOfRow({title: contentTitle, description: contentDescription})
+  const newContent = new ContentOfRow({
+    title: contentTitle,
+    description: contentDescription,
+  });
   await Task.updateOne(
     { _id: id, "content._id": rowId },
-    {$push: {"content.$.content": newContent}}
-  )
+    { $push: { "content.$.content": newContent } }
+  );
   res.redirect(`/tasks/${id}`);
+});
+
+// delete content of row
+app.delete("/tasks/:id/:rowId/:contentId", async (req, res) => {
+  const { id, rowId, contentId } = req.params;
+  await Task.updateOne(
+    { _id: id, "content._id": rowId },
+    {
+      $pull: { "content.$.content": { _id: contentId } },
+    }
+  );
+  res.redirect(`/tasks/${id}`);
+});
+
+// update content of row
+app.put("/tasks/:id/:rowId/:contentId", async (req, res) => {
+  const { id, rowId, contentId } = req.params;
+  const { newTitle, newDescription } = req.body;
+  await Task.updateOne(
+    { _id: id },
+    {
+      $set: {
+        "content.$[outer].content.$[inner].title": newTitle,
+        "content.$[outer].content.$[inner].description": newDescription,
+      },
+    },
+    { arrayFilters: [{ "outer._id": rowId }, { "inner._id": contentId }] }
+  );
+  res.redirect(`/tasks/${id}`);
+  Task.updateOne();
 });
 
 app.listen(port, () => {
