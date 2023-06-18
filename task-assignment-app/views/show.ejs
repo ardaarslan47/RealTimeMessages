@@ -2,9 +2,14 @@
 <html lang="en">
   <%- include('partials/head') %>
   <body>
-    <%- include('partials/showNav') %>
-    <h1><%= task.title %><%- include('partials/deleteForm') %></h1>
-    <%- include('partials/createRowForm') %>
+    <% if(locals.message){%>
+    <script>
+      alert("<%= message %>");
+    </script>
+    <% } %> <%- include('partials/showNav') %>
+    <h1 id="taskHeader">
+      <%= task.title %><%- include('partials/deleteForm') %>
+    </h1>
     <%- include('partials/rowDiv') %>
   </body>
 </html>

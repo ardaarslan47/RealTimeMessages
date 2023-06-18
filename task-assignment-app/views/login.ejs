@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/login.css" />
+    <script src="/js/login.js"></script>
+    <title>Login</title>
+  </head>
+  <body>
+    <% if(locals.message){%>
+    <script>
+      alert("<%= message %>");
+    </script>
+    <% } %>
+    <div class="container">
+      <div class="form-container">
+        <div id="signInForm">
+          <form action="/login" method="post">
+            <h2>Sign In:</h2>
+            <label for="userName">Username: </label>
+            <input type="text" name="userName" id="userName" />
+            <label for="password">Password: </label>
+            <input type="password" name="password" id="password" />
+            <button type="submit">ENTER</button>
+          </form>
+        </div>
+        <div id="registerForm">
+          <form action="/register" method="post">
+            <h2>Register:</h2>
+            <label for="userNameR">Username: </label>
+            <input type="text" name="userName" id="userNameR" />
+            <label for="passwordR">Password: </label>
+            <input type="password" name="password" id="passwordR" />
+            <button type="submit">SIGN UP</button>
+          </form>
+        </div>
+      </div>
+      <div class="button-container">
+        <button class="active" onclick="setActive('signInForm', this)">
+          Sign In
+        </button>
+        <button onclick="setActive('registerForm', this)">Register</button>
+      </div>
+    </div>
+  </body>
+</html>

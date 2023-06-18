@@ -1,54 +1,196 @@
-<div>
+<div id="rowContainer">
   <% for(let row of task.content){ %>
   <div>
-    <p><%= row.title %></p>
-  </div>
-  <form
-    action="/tasks/<%= task._id %>/<%= row._id %>?_method=DELETE"
-    method="post"
-  >
-    <button type="submit" onclick="confirmSubmission(event)">&#10005;</button>
-  </form>
-  <button type="button" id="editRowFormButton">Edit Row</button>
-  <form
-    action="/tasks/<%= task._id %>/<%= row._id %>?_method=PUT"
-    method="post"
-    id="editRowForm"
-  >
-    <div class="edit-form">
-      <input type="text" name="newTitle" required />
-      <button type="submit">SUBMIT</button>
+    <div
+      style="
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 10px;
+      "
+    >
+      <h3 style="margin: 0"><%= row.title %></h3>
+      <form
+        action="/tasks/<%= task._id %>/<%= row._id %>?_method=DELETE"
+        method="post"
+      >
+        <button
+          type="submit"
+          onclick="confirmSubmission(event)"
+          class="deleteButton"
+        >
+          &#10005;
+        </button>
+      </form>
     </div>
-  </form>
-  <button id="createContentFormButton">Create Content</button>
-  <form
-    action="/tasks/<%= task._id %>/<%= row._id %>?_method=PATCH"
-    method="post"
-    id="createContentForm"
-  >
-    <input type="text" name="contentTitle" />
-    <input type="text" name="contentDescription" />
-    <button type="submit">SUBMIT</button>
-  </form>
-  <% for(let content of row.content){ %>
-  <p>
-    <%= content.description %>-<b><%= content.title %></b>-<%= content._id %>
-  </p>
-  <button id="editContentFormButton">Edit Content</button>
-  <form
-    action="/tasks/<%= task._id %>/<%= row._id %>/<%= content._id %>?_method=PUT"
-    method="post"
-    id="editContentForm"
-  >
-    <input type="text" name="newTitle" />
-    <input type="text" name="newDescription" />
-    <button type="submit">SUBMIT</button>
-  </form>
-  <form
-    action="/tasks/<%= task._id %>/<%= row._id %>/<%= content._id %>?_method=DELETE"
-    method="post"
-  >
-    <button type="submit" onclick="confirmSubmission(event)">&#10005;</button>
-  </form>
-  <% } %> <% } %>
+    <div style="display: flex; justify-content: center; gap: 10px">
+      <button
+        class="editRowFormButton greenButton"
+        onclick="editRow('<%= row._id %>')"
+      >
+        Edit Row
+      </button>
+      <form
+        action="/tasks/<%= task._id %>/<%= row._id %>?_method=PUT"
+        method="post"
+        class="editRowForm"
+        id="edit<%= row._id %>"
+      >
+        <div class="formContainer">
+          <h2>Edit Row</h2>
+          <label for="editRowFormInput">Title:</label>
+          <input
+            type="text"
+            name="newTitle"
+            id="editRowFormInput"
+            value="<%= row.title %>"
+            required
+          />
+          <button type="submit">SUBMIT</button>
+        </div>
+      </form>
+      <button
+        class="createContentFormButton greenButton"
+        onclick="createContent('<%= row._id %>')"
+      >
+        Create Content
+      </button>
+      <form
+        action="/tasks/<%= task._id %>/<%= row._id %>?_method=PATCH"
+        method="post"
+        id="create<%= row._id %>"
+        class="createContentForm"
+      >
+        <div class="formContainer">
+          <h2>Create new Content</h2>
+          <label for="createContentFormTitle">Title:</label>
+          <input type="text" name="contentTitle" id="createContentFormTitle" />
+          <label for="createContentFormDesc">Description:</label>
+          <textarea
+            type="text"
+            name="contentDescription"
+            id="createContentFormDesc"
+            style="
+              width: 105%;
+              height: 100px;
+              box-sizing: border-box;
+              resize: none;
+              padding: 10px;
+              margin-bottom: 10px;
+            "
+            required
+          ></textarea>
+          <button type="submit">SUBMIT</button>
+        </div>
+      </form>
+    </div>
+    <div class="row">
+      <% for(let content of row.content){ %>
+      <button class="accordion">
+        <%= content.title %><span style="float: right">&#8964;</span>
+      </button>
+      <div class="panel">
+        <p style="color: white"><%= content.description %></p>
+        <div
+          style="
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+          "
+        >
+          <button
+            class="greenButton transferContentFormButton"
+            onclick="transferContent('<%= content._id %>')"
+          >
+            Transfer
+          </button>
+          <form
+            action="/tasks/<%= task._id %>/<%= row._id %>/<%= content._id %>?_method=TRACE"
+            method="post"
+            id="transfer<%= content._id %>"
+            class="transferContentForm"
+          >
+            <div class="formContainer">
+              <h2>Transfer to:</h2>
+              <% task.content.filter(x => x._id !== row._id).forEach(x => { %>
+              <input
+                type="text"
+                value="<%= content.title %>"
+                name="title"
+                style="display: none"
+              />
+              <input
+                type="text"
+                value="<%= content.description %>"
+                name="description"
+                style="display: none"
+              />
+              <button type="submit" value="<%= x._id %>" name="newRow">
+                <%= x.title %>
+              </button>
+              <% }) %>
+            </div>
+          </form>
+          <button
+            class="editContentFormButton greenButton"
+            onclick="editContent('<%= content._id %>')"
+          >
+            Edit Content
+          </button>
+          <form
+            action="/tasks/<%= task._id %>/<%= row._id %>/<%= content._id %>?_method=PUT"
+            method="post"
+            class="editContentForm"
+            id="<%= content._id %>"
+          >
+            <div class="formContainer">
+              <h2>Edit Content Named: <%= content.title %></h2>
+              <label for="editContentTitle">Title:</label>
+              <input
+                type="text"
+                name="newTitle"
+                id="editContentTitle"
+                value="<%= content.title %>"
+                required
+              />
+              <label for="editContentDesc">Description:</label>
+              <textarea
+                type="text"
+                name="newDescription"
+                id="editContentDesc"
+                style="
+                  width: 105%;
+                  height: 100px;
+                  box-sizing: border-box;
+                  resize: none;
+                  padding: 10px;
+                  margin-bottom: 10px;
+                "
+                required
+              >
+              <%= content.description %></textarea
+              >
+              <button type="submit">SUBMIT</button>
+            </div>
+          </form>
+          <form
+            action="/tasks/<%= task._id %>/<%= row._id %>/<%= content._id %>?_method=DELETE"
+            method="post"
+            style="display: flex; align-items: center"
+          >
+            <button
+              type="submit"
+              onclick="confirmSubmission(event)"
+              class="deleteButton"
+            >
+              &#10005;
+            </button>
+          </form>
+        </div>
+      </div>
+      <% } %>
+    </div>
+  </div>
+  <% } %> <%- include('createRowForm') %>
 </div>

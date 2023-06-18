@@ -1,5 +1,15 @@
-<button id="createRowFormButton">Create New Row</button>
-<form action="/tasks/<%= task._id %>?_method=PATCH" method="post" id="createRowForm">
-  <input type="text" name="rowTitle" required />
-  <button type="submit"> SUBMIT</button>
+<div style="min-height: 161.5px; display: flex">
+  <button id="createRowFormButton" class="greenButton">&#43;</button>
+</div>
+<form
+  action="/tasks/<%= task._id %>?_method=PATCH"
+  method="post"
+  id="createRowForm"
+>
+  <div class="formContainer">
+    <h2>Create new Row</h2>
+    <label for="createRowFormInput">Title: </label>
+    <input type="text" name="rowTitle" id="createRowFormInput" required />
+    <button type="submit">SUBMIT</button>
+  </div>
 </form>

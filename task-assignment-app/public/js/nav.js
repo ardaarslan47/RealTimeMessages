@@ -1,3 +1,68 @@
+const colors = [
+  { main: "#fdd85d", darker: "#c9ac4b" },
+  { main: "#0096C7", darker: "#006f94" },
+  { main: "#ff87ab", darker: "#cc6c89" },
+  { main: "#f28f3b", darker: "#bf722e" },
+  { main: "#b7e4c7", darker: "#8db099" },
+  { main: "#48CAE4", darker: "#389cb0" },
+];
+function setColor(i) {}
+
+function toggleDisplay(...elements) {
+  elements.forEach((element) => {
+    element.style.display =
+      element.style.display === "block" ? "none" : "block";
+  });
+}
+
+function createContent(id) {
+  const createContentForm = document.getElementById("create" + id);
+  toggleDisplay(createContentForm, overlay);
+
+  function overlayClickListener() {
+    toggleDisplay(createContentForm, overlay);
+    overlay.removeEventListener("click", overlayClickListener);
+  }
+
+  overlay.addEventListener("click", overlayClickListener);
+}
+
+function editRow(id) {
+  const editRowForm = document.getElementById("edit" + id);
+  toggleDisplay(editRowForm, overlay);
+
+  function overlayClickListener() {
+    toggleDisplay(editRowForm, overlay);
+    overlay.removeEventListener("click", overlayClickListener);
+  }
+
+  overlay.addEventListener("click", overlayClickListener);
+}
+
+function transferContent(id) {
+  const transferForm = document.getElementById("transfer" + id);
+  toggleDisplay(transferForm, overlay);
+
+  function overlayClickListener() {
+    toggleDisplay(transferForm, overlay);
+    overlay.removeEventListener("click", overlayClickListener);
+  }
+
+  overlay.addEventListener("click", overlayClickListener);
+}
+
+function editContent(contentId) {
+  const editContentForm = document.getElementById(contentId);
+  toggleDisplay(editContentForm, overlay);
+
+  function overlayClickListener() {
+    toggleDisplay(editContentForm, overlay);
+    overlay.removeEventListener("click", overlayClickListener);
+  }
+
+  overlay.addEventListener("click", overlayClickListener);
+}
+
 function confirmSubmission(event) {
   const confirmed = window.confirm("Are you sure you want to delete?");
   if (!confirmed) {
@@ -6,11 +71,40 @@ function confirmSubmission(event) {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-  function toggleDisplay(...elements) {
-    elements.forEach((element) => {
-      element.style.display =
-        element.style.display === "block" ? "none" : "block";
+  const rows = document.querySelectorAll(".row");
+
+  for (let i = 0; i < rows.length; i++) {
+    const row = rows[i];
+    const colorIndex = i % colors.length;
+
+    row.style.backgroundColor = colors[colorIndex].main;
+    row.style.borderColor = colors[colorIndex].darker;
+  }
+
+  const acc = document.getElementsByClassName("accordion");
+
+  for (let i = 0; i < acc.length; i++) {
+    acc[i].addEventListener("click", function () {
+      closeAllAccordions(acc, this);
+
+      this.classList.toggle("active");
+      const panel = this.nextElementSibling;
+      if (panel.style.display === "block") {
+        panel.style.display = "none";
+      } else {
+        panel.style.display = "block";
+      }
     });
+  }
+
+  function closeAllAccordions(accordions, currentAccordion) {
+    for (let i = 0; i < accordions.length; i++) {
+      if (accordions[i] !== currentAccordion) {
+        accordions[i].classList.remove("active");
+        const panel = accordions[i].nextElementSibling;
+        panel.style.display = "none";
+      }
+    }
   }
 
   //   Task Add Form
@@ -55,58 +149,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
       function overlayClickListener() {
         toggleDisplay(createRowForm, overlay);
-        overlay.removeEventListener("click", overlayClickListener);
-      }
-
-      overlay.addEventListener("click", overlayClickListener);
-    });
-  }
-
-  //   Edit Row Form
-  const editRowFormButton = document.getElementById("editRowFormButton");
-  const editRowForm = document.getElementById("editRowForm");
-  if (editRowForm) {
-    editRowFormButton.addEventListener("click", () => {
-      toggleDisplay(editRowForm, overlay);
-
-      function overlayClickListener() {
-        toggleDisplay(editRowForm, overlay);
-        overlay.removeEventListener("click", overlayClickListener);
-      }
-
-      overlay.addEventListener("click", overlayClickListener);
-    });
-  }
-
-  // create content form
-  const createContentFormButton = document.getElementById(
-    "createContentFormButton"
-  );
-  const createContentForm = document.getElementById("createContentForm");
-  if (createContentForm) {
-    createContentFormButton.addEventListener("click", () => {
-      toggleDisplay(createContentForm, overlay);
-
-      function overlayClickListener() {
-        toggleDisplay(createContentForm, overlay);
-        overlay.removeEventListener("click", overlayClickListener);
-      }
-
-      overlay.addEventListener("click", overlayClickListener);
-    });
-  }
-
-  // edit content form
-  const editContentFormButton = document.getElementById(
-    "editContentFormButton"
-  );
-  const editContentForm = document.getElementById("editContentForm");
-  if (editContentForm) {
-    editContentFormButton.addEventListener("click", () => {
-      toggleDisplay(editContentForm, overlay);
-
-      function overlayClickListener() {
-        toggleDisplay(editContentForm, overlay);
         overlay.removeEventListener("click", overlayClickListener);
       }
 
