@@ -2,13 +2,7 @@
 <html lang="en">
   <%- include('partials/head') %>
   <body>
-    <% if(locals.message){%>
-    <script>
-      alert("<%= message %>");
-    </script>
-    <% } %> <%- include('partials/nav') %>
-    <div id="mainPage">
-      <h2 id="typingText">Please Select or Create a Task</h2>
-    </div>
+    <%- include('partials/nav') %>
+    <h1>Please Select or Create a Task</h1>
   </body>
 </html>
