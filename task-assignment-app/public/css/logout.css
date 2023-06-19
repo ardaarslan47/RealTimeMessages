@@ -1,0 +1,36 @@
+#logout {
+  margin-left: auto;
+  margin-right: 10px;
+  position: relative;
+}
+
+.logout-header {
+  color: white;
+  text-decoration: none;
+  padding: 5px 20px;
+  background-color: #219ebc;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.logout-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  border-radius: 20px;
+  top: 24px;
+  box-shadow: 0px 0px 16px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  width: 100%;
+}
+
+.logout-content a {
+  color: #333;
+  padding: 10px 20px;
+  text-decoration: none;
+  display: block;
+}
+
+#logout:hover .logout-content {
+  display: block;
+}

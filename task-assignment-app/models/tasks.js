@@ -20,6 +20,11 @@ const contentSchema = new mongoose.Schema({
 });
 
 const taskSchema = new mongoose.Schema({
+  user_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "User",
+  },
   title: {
     type: String,
     required: true,
