@@ -66,6 +66,8 @@ const loginUser = asyncHandler(async (req, res) => {
     res.status(401);
     throw new Error("Username or password is not valid");
   }
+  res.status(500);
+  throw new Error("something wrong");
 });
 
 module.exports = {
